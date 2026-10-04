@@ -4,7 +4,7 @@
 
 **מדריך מעשי ומלא ל־Claude Code – בעברית, מעודכן לאוקטובר 2026 (גרסה 2.1.289).**
 
-🌐 **[לגרסת האתר (GitHub Pages)](https://razhadas.github.io/Claude-Code-in-Hebrew/)**
+🌐 **[לגרסת האתר (GitHub Pages)](https://tovtechorg.github.io/Claude-Code-in-Hebrew/)**
 
 > רוב מה שעושה את Claude טוב **הוא לא ה־prompt** – אלא ההקשר, הכלים וההרשאות. המדריך הזה מסביר איך לבנות אותם נכון.
 
@@ -78,5 +78,9 @@ claude
 - המבנה הרעיוני מבוסס על [Claude Camp Toolkit](https://claudecamp.ai/toolkit/read) (אוגוסט 2026), מתורגם, מעובד ומעודכן לאוקטובר 2026.
 
 > ⚠️ Claude Code מתעדכן כמעט כל יום. אם משהו לא תואם – בדקו `/release-notes` אצלכם ופתחו Issue / PR.
+
+---
+
+<sub>🙏 תודה ל־<a href="https://claudecamp.ai/">Claude Camp</a> על ההשראה והמבנה המקורי.</sub>
 
 </div>
