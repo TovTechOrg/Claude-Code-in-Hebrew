@@ -315,16 +315,17 @@ function stripMdNav(md) {
     .join("\n").replace(/\n---\s*\n*$/, "\n");
 }
 
-// GitHub alerts (> [!NOTE] etc.) → styled callouts
-const ALERTS = { NOTE: "ℹ️ שימו לב", TIP: "💡 טיפ", IMPORTANT: "❗ חשוב", WARNING: "⚠️ אזהרה", CAUTION: "🛑 זהירות" };
+// Callouts: blockquotes that open with a bold emoji title ("> **💡 טיפ**") become styled boxes.
+// (GitHub alert syntax doesn't render inside the RTL <div>, so the MD files use this form.)
+const ALERTS = { "ℹ️ שימו לב": "note", "💡 טיפ": "tip", "⚠️ אזהרה": "warning" };
 function renderAlerts(root) {
   root.querySelectorAll("blockquote").forEach(bq => {
     const p = bq.querySelector("p");
-    const m = p && p.innerHTML.match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(<br>)?\s*/);
-    if (!m) return;
+    const m = p && p.innerHTML.match(/^\s*<strong>([^<]+)<\/strong>\s*(<br>)?\s*/);
+    if (!m || !ALERTS[m[1].trim()]) return;
     p.innerHTML = p.innerHTML.slice(m[0].length);
-    bq.className = "alert alert-" + m[1].toLowerCase();
-    bq.insertAdjacentHTML("afterbegin", `<div class="alert-title">${ALERTS[m[1]]}</div>`);
+    bq.className = "alert alert-" + ALERTS[m[1].trim()];
+    bq.insertAdjacentHTML("afterbegin", `<div class="alert-title">${m[1]}</div>`);
   });
 }
 

@@ -85,7 +85,7 @@ claude
 - [סקירת המודלים – Claude Platform](https://platform.claude.com/docs/en/models/opus-5-5/overview)
 - המבנה הרעיוני מבוסס על [Claude Camp Toolkit](https://claudecamp.ai/toolkit/read) (אוגוסט 2026), מתורגם, מעובד ומעודכן לאוקטובר 2026.
 
-> [!WARNING]
+> **⚠️ אזהרה**  
 > &rlm;Claude Code מתעדכן כמעט כל יום. אם משהו לא תואם – בדקו `/release-notes` אצלכם ופתחו Issue / PR.
 
 ---
