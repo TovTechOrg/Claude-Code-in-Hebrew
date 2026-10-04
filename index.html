@@ -150,11 +150,22 @@
     background: var(--surface); border-radius: 8px; color: var(--text);
   }
   .md blockquote p { margin: 4px 0; }
+  .md .alert { --c: var(--accent); border-inline-start-color: var(--c); background: color-mix(in srgb, var(--c) 9%, var(--surface)); }
+  .md .alert-note { --c: #3b82c4; }
+  .md .alert-tip { --c: #2f9e6b; }
+  .md .alert-important { --c: #8a5cd1; }
+  .md .alert-warning { --c: #c98a12; }
+  .md .alert-caution { --c: #d14343; }
+  .md .alert-title { font-weight: 700; color: var(--c); font-size: .92rem; margin-bottom: 2px; }
+  /* each line picks its own direction: English code stays LTR, Hebrew lines go RTL */
+  .md pre, .md pre code { unicode-bidi: plaintext; text-align: start; }
+  .md h1 + p[align="center"] { margin-top: -6px; color: var(--muted); }
+  .md p[align="center"] { text-align: center; }
   .md hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0 20px; }
   .md code {
     font-family: "JetBrains Mono", monospace; font-size: .85em;
     background: var(--inline-code-bg); padding: 2px 6px; border-radius: 5px;
-    direction: ltr; unicode-bidi: embed;
+    direction: ltr; unicode-bidi: isolate;
   }
   .md pre {
     direction: ltr; text-align: left;
@@ -299,7 +310,22 @@ function fixLinks(root) {
 
 // The MD files carry their own prev/next lines; the site renders its own pager instead
 function stripMdNav(md) {
-  return md.split("\n").filter(l => !/^>\s*\[←/.test(l.trim())).join("\n").replace(/\n---\s*\n*$/, "\n");
+  return md.replace(/\r/g, "").split("\n")
+    .filter(l => !/^<p align="center"><a /.test(l.trim()) && !/^<\/?div dir="rtl">$/.test(l.trim()))
+    .join("\n").replace(/\n---\s*\n*$/, "\n");
+}
+
+// GitHub alerts (> [!NOTE] etc.) → styled callouts
+const ALERTS = { NOTE: "ℹ️ שימו לב", TIP: "💡 טיפ", IMPORTANT: "❗ חשוב", WARNING: "⚠️ אזהרה", CAUTION: "🛑 זהירות" };
+function renderAlerts(root) {
+  root.querySelectorAll("blockquote").forEach(bq => {
+    const p = bq.querySelector("p");
+    const m = p && p.innerHTML.match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(<br>)?\s*/);
+    if (!m) return;
+    p.innerHTML = p.innerHTML.slice(m[0].length);
+    bq.className = "alert alert-" + m[1].toLowerCase();
+    bq.insertAdjacentHTML("afterbegin", `<div class="alert-title">${ALERTS[m[1]]}</div>`);
+  });
 }
 
 function pager(idx) {
@@ -335,6 +361,7 @@ function enhance() {
     t.replaceWith(w); w.appendChild(t);
   });
   content.querySelectorAll("pre code").forEach(el => hljs.highlightElement(el));
+  renderAlerts(content);
   fixLinks(content);
 }
 

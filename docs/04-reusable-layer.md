@@ -1,6 +1,11 @@
-# 04 · השכבה הרב־פעמית: Skills, פקודות, MCP, Plugins ו־Mods
+<div dir="rtl">
 
-> [← הקודם: הקשר וזיכרון](03-context-memory.md) · [תוכן העניינים](../README.md) · [הבא: דף עזר ←](05-cheat-sheet.md)
+<p align="center"><a href="03-context-memory.md">→ הקודם</a> &nbsp;|&nbsp; <a href="../README.md">📚 תוכן העניינים</a> &nbsp;|&nbsp; <a href="05-cheat-sheet.md">הבא ←</a></p>
+
+# 🧩 השכבה הרב־פעמית: Skills, פקודות, MCP, Plugins ו־Mods
+
+<p align="center"><sub>פרק 4 מתוך 8 · Claude Code בעברית · מעודכן לאוקטובר 2026</sub></p>
+
 
 ## חמש אבני הבניין
 
@@ -14,14 +19,14 @@
 
 ## מה הולך לאן? עץ החלטה
 
-```
-עובדה על הפרויקט                ← CLAUDE.md
-איך עושים משהו                  ← Skill
-משימה שאני מפעיל ביד            ← Command (או Skill עם /שם)
-גישה למערכת אחרת                ← MCP / Connector
-חומר עיון                       ← docs/
-הרשאות, מודל, Hooks             ← .claude/settings.json
-```
+| מה זה? | ← איפה לשים |
+|--------|--------------|
+| עובדה על הפרויקט | `CLAUDE.md` |
+| איך עושים משהו | Skill |
+| משימה שמפעילים ביד | Command (או Skill עם `/שם`) |
+| גישה למערכת אחרת | MCP / Connector |
+| חומר עיון | `docs/` |
+| הרשאות, מודל, Hooks | `.claude/settings.json` |
 
 ### מטריצת רלוונטיות
 
@@ -31,32 +36,38 @@
 | רק לחלק מהקבצים | `.claude/rules/*.md` עם `paths:` | רק כשנוגעים בקבצים תואמים |
 | מדי פעם | `docs/` | כשקוראים או מזכירים עם `@` |
 
-## Skills
+## &rlm;Skills
+
+<div dir="ltr">
 
 ```markdown
 ---
 name: release-notes
-description: כתיבת release notes מתוך git log. השתמש כשמבקשים "release notes" או "מה השתנה".
+description: כתיבת הערות גרסה מהיסטוריית הגיט. השתמש כשמבקשים "מה השתנה".
 ---
 1. הרץ `git log --oneline <tag>..HEAD`.
 2. קבץ לפי feat / fix / chore.
 3. ...
 ```
 
+</div>
+
 - רק ה־`description` נטען תמיד; הגוף נטען כשה־Skill מופעל. לכן התיאור צריך לומר **מתי** להשתמש.
 - **כתבו Skill אחרי שעשיתם משהו פעמיים**, לא לפני.
-- `.claude/commands/x.md` ו־`.claude/skills/x/SKILL.md` – שניהם נותנים `/x`.
+- &rlm;`.claude/commands/x.md` ו־`.claude/skills/x/SKILL.md` – שניהם נותנים `/x`.
 - אפשר לשרשר עד 6 Skills: `/skill-a /skill-b עשה XYZ`.
-- `/reload-skills` טוען Skills חדשים בלי להפעיל מחדש.
-- Skills מובנים שימושיים: `/code-review`, `/simplify`, `/run`, `/verify`, `/batch`, `/loop`, `/debug`, `/fewer-permission-prompts`, `/update-config`.
+- &rlm;`/reload-skills` טוען Skills חדשים בלי להפעיל מחדש.
+- &rlm;Skills מובנים שימושיים: `/code-review`, `/simplify`, `/run`, `/verify`, `/batch`, `/loop`, `/debug`, `/fewer-permission-prompts`, `/update-config`.
 
-## MCP – Model Context Protocol
+## &rlm;MCP – Model Context Protocol
 
 מחבר את Claude למערכות חיצוניות (Postgres, Stripe, Notion, GitHub, Sentry…). שאלה אחת → כמה קריאות כלים במקביל → תשובה מאוחדת. בלי אינטגרציה ייעודית.
 
 **שתי דרכים להפעיל:**
-1. **Connectors בחשבון** – OAuth דרך claude.ai, עוברים איתכם לכל משטח.
+1. &rlm;**Connectors בחשבון** – OAuth דרך claude.ai, עוברים איתכם לכל משטח.
 2. **שרתים מקובץ** – `.mcp.json` בשורש הריפו (משותף לצוות) או `~/.claude.json` (אישי).
+
+<div dir="ltr">
 
 ```json
 {
@@ -69,36 +80,43 @@ description: כתיבת release notes מתוך git log. השתמש כשמבקש�
 }
 ```
 
+</div>
+
 **הרשאות:** כלי קריאה → always-allow. כלי כתיבה → להשאיר על ask.
 
 **חדש בספטמבר–אוקטובר 2026:**
-- `/mcp reconnect all` – מנסה מחדש את כל השרתים שנכשלו או דורשים התחברות.
-- `/mcp` מציג יותר כלים, עם גלילה ועכבר, ומסמן כלים שהארגון חסם.
+- &rlm;`/mcp reconnect all` – מנסה מחדש את כל השרתים שנכשלו או דורשים התחברות.
+- &rlm;`/mcp` מציג יותר כלים, עם גלילה ועכבר, ומסמן כלים שהארגון חסם.
 - תמיכה בבקשות URL מהשרת (התחברות) לפי פרוטוקול MCP 2025-11-25.
 
-## Plugins
+## &rlm;Plugins
+
+<div dir="ltr">
 
 ```
 /plugin marketplace add <owner/repo>
 /plugin install <name>@<marketplace>
-/plugin configure <name>          ← חדש: הגדרת אפשרויות plugin
-/reload-plugins                   ← טעינה מחדש בלי restart
+/plugin configure <name>          ← חדש: הגדרת אפשרויות
+/reload-plugins                   ← טעינה מחדש בלי הפעלה מחדש
 ```
 
-⚠️ **קראו מה שאתם מתקינים.** Plugin יכול להכיל הוראות שמשנות את התנהגות Claude בכל מקום, Hooks שמריצים קוד, ושרתי MCP.
+</div>
+
+> [!WARNING]
+> **קראו מה שאתם מתקינים.** Plugin יכול להכיל הוראות שמשנות את התנהגות Claude בכל מקום, Hooks שמריצים קוד, ושרתי MCP.
 
 ### בדיקת Plugins – `claude plugin eval` (חדש, 2.1.269)
 
 ```bash
-claude plugin eval init   # Claude שואל מה זו תוצאה טובה ומציע מקרי בדיקה
-claude plugin eval .      # מריץ, נותן ציון – עם ובלי ה-plugin
+claude plugin eval init   # שואל מה זו תוצאה טובה ומציע מקרי בדיקה
+claude plugin eval .      # מריץ ונותן ציון, עם ובלי התוסף
 ```
 
 הדו"ח המלא נשמר ב־`evals/results/report.html`. כל ריצה היא קריאת מודל אמיתית בחשבון שלכם.
 
-## Mods (חדש, 2.1.287)
+## &rlm;Mods (חדש, 2.1.287)
 
-Mods הם Plugins שיכולים להתחבר עמוק יותר: לוחות חיים, פס סטטוס, התראות, hooks כפונקציות – עם hot-reload בתוך הסשן.
+&rlm;Mods הם Plugins שיכולים להתחבר עמוק יותר: לוחות חיים, פס סטטוס, התראות, hooks כפונקציות – עם hot-reload בתוך הסשן.
 
 - דוגמה מובנית: **"You should know"** – סוכן צד שעוקב ומסמן דברים שאתם או Claude עלולים לפספס:
   `/plugin enable cc-plugin-you-should-know@builtin`
@@ -106,4 +124,6 @@ Mods הם Plugins שיכולים להתחבר עמוק יותר: לוחות חי
 
 ---
 
-> [← הקודם: הקשר וזיכרון](03-context-memory.md) · [תוכן העניינים](../README.md) · [הבא: דף עזר ←](05-cheat-sheet.md)
+<p align="center"><a href="03-context-memory.md">→ הקודם: הקשר וזיכרון</a> &nbsp;|&nbsp; <a href="../README.md">📚 תוכן העניינים</a> &nbsp;|&nbsp; <a href="05-cheat-sheet.md">הבא: דף עזר ←</a></p>
+
+</div>

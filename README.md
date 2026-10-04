@@ -1,6 +1,6 @@
 <div dir="rtl">
 
-# Claude Code בעברית 🇮🇱
+# &rlm;Claude Code בעברית 🇮🇱
 
 **מדריך מעשי ומלא ל־Claude Code – בעברית, מעודכן לאוקטובר 2026 (גרסה 2.1.289).**
 
@@ -23,6 +23,8 @@
 
 ## 🚀 התחלה מהירה
 
+<div dir="ltr">
+
 ```bash
 # macOS / Linux / WSL
 curl -fsSL https://claude.ai/install.sh | bash
@@ -34,11 +36,13 @@ cd my-project
 claude
 ```
 
+</div>
+
 ואז, בתוך הסשן:
 
-1. `/init` – יוצר `CLAUDE.md` ראשוני. **ערכו אותו** – השאירו רק את מה שהקוד לא אומר.
-2. `/context` – ראו מה באמת נטען לחלון ההקשר.
-3. `Shift+Tab` – החליפו בין מצבי הרשאות (ברירת המחדל עכשיו: **auto**).
+1. &rlm;`/init` – יוצר `CLAUDE.md` ראשוני. **ערכו אותו** – השאירו רק את מה שהקוד לא אומר.
+2. &rlm;`/context` – ראו מה באמת נטען לחלון ההקשר.
+3. &rlm;`Shift+Tab` – החליפו בין מצבי הרשאות (ברירת המחדל עכשיו: **auto**).
 4. לשינוי בכמה קבצים – התחילו ב־`/plan`.
 
 ## ✅ עשרה דברים לעשות השבוע
@@ -47,7 +51,7 @@ claude
 2. לקצץ את CLAUDE.md לפחות מ־200 שורות.
 3. להעביר חוקים מותנים ל־`.claude/rules/` עם `paths:`.
 4. להגדיר הרשאות: קריאה = allow, כתיבה = ask.
-5. Plan mode לכל שינוי רב־קבצים.
+5. &rlm;Plan mode לכל שינוי רב־קבצים.
 6. הוראה שחוזרת → Skill.
 7. פעולה שחוזרת → Command.
 8. לחבר מערכת אמיתית אחת דרך MCP.
@@ -56,28 +60,33 @@ claude
 
 ## 🗂️ מבנה הריפו
 
+<div dir="ltr">
+
 ```
 .
 ├── README.md          ← אתם כאן
-├── index.html         ← אתר GitHub Pages (עמוד אחד, RTL)
-└── docs/              ← פרקי המדריך ב-Markdown
+├── index.html         ← אתר האינטרנט (עמוד אחד)
+└── docs/              ← פרקי המדריך
     ├── 01-the-stack.md
     ├── ...
     └── 08-whats-new.md
 ```
 
+</div>
+
 ### הפעלת GitHub Pages
 
-`Settings` → `Pages` → `Source: Deploy from a branch` → `main` / `/ (root)`. האתר יעלה בכתובת `https://<user>.github.io/<repo>/`.
+&rlm;`Settings` → `Pages` → `Source: Deploy from a branch` → `main` / `/ (root)`. האתר יעלה בכתובת `https://<user>.github.io/<repo>/`.
 
 ## 📖 מקורות
 
 - [התיעוד הרשמי של Claude Code](https://code.claude.com/docs)
-- [Changelog רשמי](https://code.claude.com/docs/en/changelog)
+- &rlm;[Changelog רשמי](https://code.claude.com/docs/en/changelog)
 - [סקירת המודלים – Claude Platform](https://platform.claude.com/docs/en/models/opus-5-5/overview)
 - המבנה הרעיוני מבוסס על [Claude Camp Toolkit](https://claudecamp.ai/toolkit/read) (אוגוסט 2026), מתורגם, מעובד ומעודכן לאוקטובר 2026.
 
-> ⚠️ Claude Code מתעדכן כמעט כל יום. אם משהו לא תואם – בדקו `/release-notes` אצלכם ופתחו Issue / PR.
+> [!WARNING]
+> &rlm;Claude Code מתעדכן כמעט כל יום. אם משהו לא תואם – בדקו `/release-notes` אצלכם ופתחו Issue / PR.
 
 ---
 

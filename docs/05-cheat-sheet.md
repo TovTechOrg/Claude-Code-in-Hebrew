@@ -1,10 +1,17 @@
-# 05 · דף עזר ל־Claude Code
+<div dir="rtl">
 
-> [← הקודם: השכבה הרב־פעמית](04-reusable-layer.md) · [תוכן העניינים](../README.md) · [הבא: סוכנים ואוטומציה ←](06-agents-automation.md)
+<p align="center"><a href="04-reusable-layer.md">→ הקודם</a> &nbsp;|&nbsp; <a href="../README.md">📚 תוכן העניינים</a> &nbsp;|&nbsp; <a href="06-agents-automation.md">הבא ←</a></p>
+
+# ⚡ דף עזר ל־Claude Code
+
+<p align="center"><sub>פרק 5 מתוך 8 · Claude Code בעברית · מעודכן לאוקטובר 2026</sub></p>
+
 
 מעודכן לגרסה **2.1.289** (3 באוקטובר 2026). הקלידו `/` בתוך סשן כדי לראות את הרשימה המלאה שזמינה לכם.
 
 ## התקנה והפעלה
+
+<div dir="ltr">
 
 ```bash
 # macOS / Linux / WSL
@@ -13,14 +20,16 @@ curl -fsSL https://claude.ai/install.sh | bash
 # Windows (PowerShell)
 irm https://claude.ai/install.ps1 | iex
 
-# חלופות: brew install --cask claude-code · winget install Anthropic.ClaudeCode
-# בדיקה: claude --version · claude doctor
 
 cd my-project
 claude                     # סשן אינטראקטיבי
-claude -p "הסבר את הריפו"  # מצב לא-אינטראקטיבי (סקריפטים/CI)
+claude -p "explain this repo" # מצב לא־אינטראקטיבי, לסקריפטים
 claude --continue          # המשך הסשן האחרון
 ```
+
+</div>
+
+חלופות: `brew install --cask claude-code` · `winget install Anthropic.ClaudeCode`. בדיקה: `claude --version` · `claude doctor`.
 
 גם זמין כ־**אפליקציית Desktop** (Mac/Windows), **ב־VS Code ו־JetBrains**, וב־**ווב** (claude.ai/code).
 
@@ -81,18 +90,20 @@ claude --continue          # המשך הסשן האחרון
 
 ## מבנה התיקיות
 
+<div dir="ltr">
+
 ```
 project-root/
-├── CLAUDE.md                ← החוזה (נכנס ל-git)
-├── CLAUDE.local.md          ← אישי (gitignore)
-├── .mcp.json                ← שרתי MCP של הצוות
+├── CLAUDE.md                ← החוזה, משותף לצוות
+├── CLAUDE.local.md          ← אישי, לא נכנס לגיט
+├── .mcp.json                ← שרתי הכלים של הצוות
 ├── docs/                    ← חומר עיון
 └── .claude/
-    ├── settings.json        ← הרשאות, hooks, מודל (משותף)
+    ├── settings.json        ← הרשאות, הוקים ומודל – משותף
     ├── settings.local.json  ← אישי
-    ├── rules/               ← חוקים מותנים (paths:)
+    ├── rules/               ← חוקים מותנים לפי נתיב
     ├── skills/<name>/SKILL.md
-    ├── commands/            ← פקודות /slash
+    ├── commands/            ← פקודות סלאש
     └── agents/              ← Subagents
 
 ~/.claude/                   ← מקומי למחשב, לא נוסע
@@ -101,6 +112,8 @@ project-root/
 ├── skills/ · agents/ · commands/
 └── projects/<repo>/memory/MEMORY.md
 ```
+
+</div>
 
 ## מצבי הרשאות (Permission Modes)
 
@@ -114,18 +127,18 @@ project-root/
 | `bypassPermissions` | הכל | רק בקונטיינר/VM מבודד! |
 
 - ⭐ **שינוי חשוב (2.1.283):** `auto` הוא **מצב ברירת המחדל** בטרמינל וב־VS Code כשלא הוגדר מצב אחר. `permissions.defaultMode` עדיין גובר.
-- **`Shift+Tab`** מחליף מצב: auto → manual → acceptEdits → plan → auto.
+- &rlm;**`Shift+Tab`** מחליף מצב: auto → manual → acceptEdits → plan → auto.
 - חוקי **deny** חוסמים בכל מצב, כולל `bypassPermissions`.
-- `/auto-mode-setup` מנסח כללי סביבה ל־auto mode מתוך הפרויקט שלכם.
-- `/sandbox` – ארגז חול ל־Bash (macOS, Linux, WSL2).
+- &rlm;`/auto-mode-setup` מנסח כללי סביבה ל־auto mode מתוך הפרויקט שלכם.
+- &rlm;`/sandbox` – ארגז חול ל־Bash (macOS, Linux, WSL2).
 
 ## יעילות הקשר
 
-- `CLAUDE.md` נטען במלואו בכל סשן → פחות מ־200 שורות.
+- &rlm;`CLAUDE.md` נטען במלואו בכל סשן → פחות מ־200 שורות.
 - זיכרון אוטומטי → רק 200 שורות / 25KB ראשונים.
-- `@path` בתוך CLAUDE.md → מצמיד קובץ (עד 4 רמות).
-- `@file` בתוך prompt → מושך את הקובץ לתור אחד.
-- `.claude/rules/*.md` עם `paths:` → נטען רק בהתאמה.
+- &rlm;`@path` בתוך CLAUDE.md → מצמיד קובץ (עד 4 רמות).
+- &rlm;`@file` בתוך prompt → מושך את הקובץ לתור אחד.
+- &rlm;`.claude/rules/*.md` עם `paths:` → נטען רק בהתאמה.
 
 ## קיצורי מקלדת שימושיים
 
@@ -160,4 +173,6 @@ project-root/
 
 ---
 
-> [← הקודם: השכבה הרב־פעמית](04-reusable-layer.md) · [תוכן העניינים](../README.md) · [הבא: סוכנים ואוטומציה ←](06-agents-automation.md)
+<p align="center"><a href="04-reusable-layer.md">→ הקודם: השכבה הרב־פעמית</a> &nbsp;|&nbsp; <a href="../README.md">📚 תוכן העניינים</a> &nbsp;|&nbsp; <a href="06-agents-automation.md">הבא: סוכנים ואוטומציה ←</a></p>
+
+</div>
