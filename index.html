@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code בעברית</title>
+<meta name="description" content="מדריך מעשי ומלא ל-Claude Code בעברית, מעודכן לאוקטובר 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --surface-2: #f2efe8;
+    --text: #1f1d1a;
+    --muted: #6b665e;
+    --border: #e4dfd5;
+    --accent: #c4623a;
+    --accent-soft: #f6e4da;
+    --code-bg: #1e1c1a;
+    --code-text: #f1ede6;
+    --inline-code-bg: #efe9df;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161514;
+      --surface: #1e1d1b;
+      --surface-2: #262421;
+      --text: #ece8e1;
+      --muted: #a39d93;
+      --border: #34312d;
+      --accent: #e08a62;
+      --accent-soft: #3a2a22;
+      --code-bg: #111010;
+      --inline-code-bg: #2c2a26;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161514;
+    --surface: #1e1d1b;
+    --surface-2: #262421;
+    --text: #ece8e1;
+    --muted: #a39d93;
+    --border: #34312d;
+    --accent: #e08a62;
+    --accent-soft: #3a2a22;
+    --code-bg: #111010;
+    --inline-code-bg: #2c2a26;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Heebo", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Header */
+  header.top {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 20px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.1rem; color: var(--text); }
+  .brand:hover { text-decoration: none; }
+  .logo {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--accent); color: #fff;
+    display: grid; place-items: center; font-size: 15px; font-family: "JetBrains Mono", monospace;
+  }
+  .top-actions { display: flex; gap: 8px; }
+  .icon-btn {
+    border: 1px solid var(--border); background: var(--surface); color: var(--text);
+    border-radius: 8px; padding: 6px 10px; cursor: pointer; font: inherit; font-size: .9rem;
+  }
+  .icon-btn:hover { border-color: var(--accent); }
+  #menuBtn { display: none; }
+
+  /* Layout */
+  .layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); max-width: 1240px; margin: 0 auto; }
+  nav.side {
+    position: sticky; top: 57px; align-self: start;
+    height: calc(100vh - 57px); overflow-y: auto;
+    padding: 24px 16px; border-inline-end: 1px solid var(--border);
+  }
+  nav.side .label { font-size: .75rem; letter-spacing: .06em; color: var(--muted); font-weight: 700; margin: 0 10px 8px; }
+  nav.side a {
+    display: flex; gap: 10px; align-items: baseline;
+    padding: 8px 10px; border-radius: 8px; color: var(--text); font-size: .95rem; line-height: 1.4;
+  }
+  nav.side a:hover { background: var(--surface-2); text-decoration: none; }
+  nav.side a.active { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+  nav.side .num { font-family: "JetBrains Mono", monospace; font-size: .75rem; color: var(--muted); min-width: 20px; }
+  nav.side a.active .num { color: var(--accent); }
+  nav.side .side-foot { margin: 24px 10px 0; font-size: .8rem; color: var(--muted); line-height: 1.6; }
+
+  main { padding: 32px 40px 80px; min-width: 0; }
+  article { max-width: 820px; }
+
+  /* Home */
+  .hero { padding: 24px 0 8px; }
+  .badge {
+    display: inline-block; font-size: .8rem; font-weight: 700;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 0 0 14px; font-weight: 800; }
+  .hero p.lead { font-size: 1.2rem; color: var(--muted); margin: 0 0 24px; max-width: 640px; }
+  .quote {
+    border-inline-start: 4px solid var(--accent); padding: 12px 18px; margin: 24px 0;
+    background: var(--surface); border-radius: 8px; box-shadow: var(--shadow); font-size: 1.05rem;
+  }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 28px 0; }
+  .card {
+    display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px; color: var(--text); box-shadow: var(--shadow); transition: transform .15s, border-color .15s;
+  }
+  .card:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--accent); }
+  .card .num { font-family: "JetBrains Mono", monospace; color: var(--accent); font-size: .85rem; font-weight: 600; }
+  .card h3 { margin: 4px 0 6px; font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.55; }
+  .quickstart h2 { margin-top: 40px; }
+
+  /* Markdown content */
+  .md h1 { font-size: 2.1rem; line-height: 1.25; margin: 0 0 16px; font-weight: 800; }
+  .md h2 { font-size: 1.5rem; margin: 44px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .md h3 { font-size: 1.2rem; margin: 30px 0 8px; }
+  .md p, .md li { max-width: 72ch; }
+  .md ul, .md ol { padding-inline-start: 1.4em; }
+  .md li { margin: 4px 0; }
+  .md blockquote {
+    margin: 18px 0; padding: 10px 16px; border-inline-start: 4px solid var(--accent);
+    background: var(--surface); border-radius: 8px; color: var(--text);
+  }
+  .md blockquote p { margin: 4px 0; }
+  .md hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0 20px; }
+  .md code {
+    font-family: "JetBrains Mono", monospace; font-size: .85em;
+    background: var(--inline-code-bg); padding: 2px 6px; border-radius: 5px;
+    direction: ltr; unicode-bidi: embed;
+  }
+  .md pre {
+    direction: ltr; text-align: left;
+    background: var(--code-bg); color: var(--code-text);
+    padding: 16px 18px; border-radius: 10px; overflow-x: auto;
+    font-size: .85rem; line-height: 1.6; margin: 16px 0;
+  }
+  .md pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+  .md pre code.hljs { background: none; padding: 0; }
+  .table-wrap { overflow-x: auto; margin: 16px 0; border: 1px solid var(--border); border-radius: 10px; }
+  .md table { border-collapse: collapse; width: 100%; font-size: .93rem; background: var(--surface); }
+  .md th, .md td { padding: 10px 14px; text-align: start; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .md th { background: var(--surface-2); font-weight: 700; white-space: nowrap; }
+  .md tr:last-child td { border-bottom: 0; }
+  .md td code { white-space: nowrap; }
+
+  .pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 48px; }
+  .pager a {
+    flex: 1; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+    background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+  }
+  .pager a:hover { border-color: var(--accent); text-decoration: none; }
+  .pager .dir { display: block; font-size: .8rem; color: var(--muted); }
+  .pager .next { text-align: left; }
+
+  .loading, .error { color: var(--muted); padding: 40px 0; }
+  footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: .85rem; }
+
+  /* Mobile */
+  @media (max-width: 860px) {
+    #menuBtn { display: inline-block; }
+    .layout { grid-template-columns: 1fr; }
+    nav.side {
+      position: fixed; top: 57px; inset-inline-start: 0; width: 280px; max-width: 85vw;
+      background: var(--bg); z-index: 15; transform: translateX(100%); transition: transform .2s;
+      box-shadow: var(--shadow);
+    }
+    nav.side.open { transform: translateX(0); }
+    main { padding: 24px 16px 60px; }
+    .md h1 { font-size: 1.7rem; }
+    .md table { min-width: 620px; }
+    .md th { white-space: normal; }
+    .pager { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/"><span class="logo">&gt;_</span> Claude Code בעברית</a>
+  <div class="top-actions">
+    <button class="icon-btn" id="themeBtn" aria-label="החלפת ערכת צבעים">🌓</button>
+    <button class="icon-btn" id="menuBtn" aria-label="תפריט">☰</button>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="side" id="side">
+    <div class="label">תוכן העניינים</div>
+    <a href="#/" data-route=""><span class="num">⌂</span> דף הבית</a>
+    <div id="navList"></div>
+    <div class="side-foot">מעודכן ל־Claude Code 2.1.289<br>אוקטובר 2026</div>
+  </nav>
+  <main>
+    <article id="content"><div class="loading">טוען…</div></article>
+  </main>
+</div>
+
+<script>
+const CHAPTERS = [
+  { slug: "01-the-stack",        title: "מפת העולם של Claude",   desc: "חמשת המשטחים, השכבות, ואיך בוחרים איפה לעבוד" },
+  { slug: "02-claude-md",        title: "CLAUDE.md – החוזה",      desc: "מה לכתוב, ארבע הרמות, ייבוא עם @, חוקים מותנים" },
+  { slug: "03-context-memory",   title: "הקשר וזיכרון",           desc: "זיכרון אוטומטי מול זיכרון בריפו, /context, /compact" },
+  { slug: "04-reusable-layer",   title: "השכבה הרב־פעמית",        desc: "Skills, פקודות, MCP, Plugins ו־Mods" },
+  { slug: "05-cheat-sheet",      title: "דף עזר",                 desc: "התקנה, פקודות, מבנה תיקיות, מצבי הרשאות, קיצורים" },
+  { slug: "06-agents-automation",title: "סוכנים ואוטומציה",       desc: "Subagents, Teams, Workflows, Routines, Managed Agents" },
+  { slug: "07-models-cost",      title: "מודלים, Effort ועלויות", desc: "Opus 5.5, Sonnet 5.5, Fable 5.1, Haiku 4.5, Caching" },
+  { slug: "08-whats-new",        title: "מה חדש (אוג׳–אוק׳ 2026)", desc: "כל השינויים החשובים בגרסאות האחרונות" },
+];
+
+const content = document.getElementById("content");
+const navList = document.getElementById("navList");
+const side = document.getElementById("side");
+const cache = {};
+
+navList.innerHTML = CHAPTERS.map((c, i) =>
+  `<a href="#/${c.slug}" data-route="${c.slug}"><span class="num">${String(i + 1).padStart(2, "0")}</span> ${c.title}</a>`
+).join("");
+
+marked.setOptions({ gfm: true, breaks: false });
+
+function homeView() {
+  const cards = CHAPTERS.map((c, i) => `
+    <a class="card" href="#/${c.slug}">
+      <span class="num">${String(i + 1).padStart(2, "0")}</span>
+      <h3>${c.title}</h3>
+      <p>${c.desc}</p>
+    </a>`).join("");
+  return `
+    <section class="hero">
+      <span class="badge">מעודכן לאוקטובר 2026 · גרסה 2.1.289</span>
+      <h1>Claude Code בעברית</h1>
+      <p class="lead">מדריך מעשי ומלא לסוכן הפיתוח של Anthropic – מ־CLAUDE.md ועד Workflows מרובי־סוכנים.</p>
+      <div class="quote">רוב מה שעושה את Claude טוב <strong>הוא לא ה־prompt</strong> – אלא ההקשר, הכלים וההרשאות.</div>
+    </section>
+    <div class="cards">${cards}</div>
+    <section class="md quickstart">
+      <h2>🚀 התחלה מהירה</h2>
+      <pre><code class="language-bash"># macOS / Linux / WSL
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Windows (PowerShell)
+irm https://claude.ai/install.ps1 | iex
+
+cd my-project
+claude</code></pre>
+      <ol>
+        <li><code>/init</code> – יוצר <code>CLAUDE.md</code> ראשוני. <strong>ערכו אותו</strong> – השאירו רק את מה שהקוד לא אומר.</li>
+        <li><code>/context</code> – ראו מה באמת נטען לחלון ההקשר.</li>
+        <li><code>Shift+Tab</code> – החליפו בין מצבי הרשאות (ברירת המחדל עכשיו: <strong>auto</strong>).</li>
+        <li>לשינוי בכמה קבצים – התחילו ב־<code>/plan</code>.</li>
+      </ol>
+      <h2>📖 מקורות</h2>
+      <ul>
+        <li><a href="https://code.claude.com/docs" target="_blank" rel="noopener">התיעוד הרשמי של Claude Code</a></li>
+        <li><a href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">Changelog רשמי</a></li>
+        <li>המבנה הרעיוני מבוסס על <a href="https://claudecamp.ai/toolkit/read" target="_blank" rel="noopener">Claude Camp Toolkit</a> (אוגוסט 2026), מתורגם, מעובד ומעודכן.</li>
+      </ul>
+    </section>
+    <footer class="foot">Claude Code מתעדכן כמעט כל יום. אם משהו לא תואם – בדקו <code>/release-notes</code> אצלכם ופתחו Issue.</footer>`;
+}
+
+// Turn relative .md links into in-app routes; open external links in a new tab
+function fixLinks(root) {
+  root.querySelectorAll("a[href]").forEach(a => {
+    const href = a.getAttribute("href");
+    if (/^https?:/.test(href)) { a.target = "_blank"; a.rel = "noopener"; return; }
+    if (/README\.md$/.test(href)) { a.setAttribute("href", "#/"); return; }
+    const m = href.match(/([\w-]+)\.md(#.*)?$/);
+    if (m) a.setAttribute("href", "#/" + m[1]);
+  });
+}
+
+// The MD files carry their own prev/next lines; the site renders its own pager instead
+function stripMdNav(md) {
+  return md.split("\n").filter(l => !/^>\s*\[←/.test(l.trim())).join("\n").replace(/\n---\s*\n*$/, "\n");
+}
+
+function pager(idx) {
+  const prev = CHAPTERS[idx - 1], next = CHAPTERS[idx + 1];
+  return `<div class="pager">
+    ${prev ? `<a href="#/${prev.slug}"><span class="dir">→ הקודם</span>${prev.title}</a>` : `<span style="flex:1"></span>`}
+    ${next ? `<a class="next" href="#/${next.slug}"><span class="dir">הבא ←</span>${next.title}</a>` : `<span style="flex:1"></span>`}
+  </div>`;
+}
+
+async function loadChapter(slug) {
+  const idx = CHAPTERS.findIndex(c => c.slug === slug);
+  if (idx < 0) { content.innerHTML = homeView(); return; }
+  content.innerHTML = `<div class="loading">טוען…</div>`;
+  try {
+    if (!cache[slug]) {
+      const res = await fetch(`docs/${slug}.md`);
+      if (!res.ok) throw new Error(res.status);
+      cache[slug] = await res.text();
+    }
+    content.innerHTML = `<div class="md">${marked.parse(stripMdNav(cache[slug]))}</div>${pager(idx)}`;
+    document.title = `${CHAPTERS[idx].title} · Claude Code בעברית`;
+  } catch (e) {
+    content.innerHTML = `<div class="error">לא הצלחתי לטעון את הפרק. אם פתחתם את הקובץ ישירות מהדיסק, הריצו שרת מקומי (למשל <code>npx serve</code>) או קראו את <a href="docs/${slug}.md">קובץ ה־Markdown</a>.</div>`;
+  }
+}
+
+function enhance() {
+  content.querySelectorAll("table").forEach(t => {
+    if (t.parentElement.classList.contains("table-wrap")) return;
+    const w = document.createElement("div");
+    w.className = "table-wrap";
+    t.replaceWith(w); w.appendChild(t);
+  });
+  content.querySelectorAll("pre code").forEach(el => hljs.highlightElement(el));
+  fixLinks(content);
+}
+
+async function route() {
+  const slug = location.hash.replace(/^#\/?/, "");
+  if (!slug) { content.innerHTML = homeView(); document.title = "Claude Code בעברית"; }
+  else await loadChapter(slug);
+  enhance();
+  document.querySelectorAll("nav.side a").forEach(a => a.classList.toggle("active", a.dataset.route === slug));
+  side.classList.remove("open");
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener("hashchange", route);
+route();
+
+document.getElementById("menuBtn").addEventListener("click", () => side.classList.toggle("open"));
+
+const themeBtn = document.getElementById("themeBtn");
+try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+themeBtn.addEventListener("click", () => {
+  const cur = document.documentElement.dataset.theme
+    || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("theme", next); } catch (e) {}
+});
+</script>
+</body>
+</html>
